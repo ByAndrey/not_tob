@@ -1,0 +1,38 @@
+#!/usr/bin/python2.7
+
+import telebot
+import os
+import time
+import requests
+
+token = ''
+chatid = ''
+hostname = os.uname()[1]
+
+bot = telebot.TeleBot(token)
+bot.send_message(chatid,"I'm running and checking WHO on %s" %hostname)
+
+def diff(list1, list2):
+    c = set(list1).union(set(list2)) # or c = set(list1) | set(list2)
+    d = set(list1).intersection(set(list2))  # or d = set(list1) & set(list2)
+    return list(c - d)
+
+t=1
+presockstat = ['']
+while t==1 :
+        sockstat = os.popen('who').read()
+        sockstat = sockstat.split('\n')
+        temp3 = [item for item in sockstat if item not in presockstat]
+        print (temp3)
+        if (sockstat != presockstat) and (sockstat != ''):
+                difflist = diff(sockstat, presockstat)
+                if (len(sockstat) > len(presockstat)):
+                        if 'root' in ''.join(difflist):
+                                bot.send_message(chatid,'@a.bykov !!!ROOT LOGIN  DETECTED!!!')                                                                                                             
+                        bot.send_message(chatid,'IN@%s: %s'%(hostname,''.join(difflist)))                                                                                                              
+                if (len(sockstat) < len(presockstat)):
+                        bot.send_message(chatid,'OUT@%s: %s'%(hostname,''.join(difflist)))                                                                                                          
+        if (sockstat != presockstat) and (sockstat == ''):
+                bot.send_message('@%s There is no users'%(hostname))
+        presockstat = sockstat
+        time.sleep(10)
