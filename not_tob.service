@@ -1,0 +1,11 @@
+[Unit]
+Description=Not_toB
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/not_tob
+ExecStop=/bin/kill -HUP $MAINPID
+Restart=always
+
+ProtectSystem=true
+ProtectHome=read-only
