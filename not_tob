@@ -4,9 +4,13 @@ import telebot
 import os
 import time
 import requests
+import configparser
 
-token = ''
-chatid = ''
+config = configparser.ConfigParser()
+config.readfp(open(r'not_tob.cfg'))
+token = config.get('bot', 'token')
+chatid = config.get('bot', 'chatid')
+close('not_tob.cfg')
 hostname = os.uname()[1]
 
 bot = telebot.TeleBot(token)
@@ -28,7 +32,7 @@ while t==1 :
                 difflist = diff(sockstat, presockstat)
                 if (len(sockstat) > len(presockstat)):
                         if 'root' in ''.join(difflist):
-                                bot.send_message(chatid,'@a.bykov !!!ROOT LOGIN  DETECTED!!!')                                                                                                             
+                                bot.send_message(chatid,'!!!ROOT LOGIN  DETECTED!!!')                                                                                                             
                         bot.send_message(chatid,'IN@%s: %s'%(hostname,''.join(difflist)))                                                                                                              
                 if (len(sockstat) < len(presockstat)):
                         bot.send_message(chatid,'OUT@%s: %s'%(hostname,''.join(difflist)))                                                                                                          
