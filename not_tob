@@ -4,21 +4,23 @@ import telebot
 import os
 import time
 import requests
+import logging
 import configparser
 
 config = configparser.ConfigParser()
 config.readfp(open(r'not_tob.cfg'))
 token = config.get('bot', 'token')
+logging.info(token)
 chatid = config.get('bot', 'chatid')
-close('not_tob.cfg')
+logging.info(chatid)
 hostname = os.uname()[1]
 
 bot = telebot.TeleBot(token)
 bot.send_message(chatid,"I'm running and checking WHO on %s" %hostname)
 
 def diff(list1, list2):
-    c = set(list1).union(set(list2)) # or c = set(list1) | set(list2)
-    d = set(list1).intersection(set(list2))  # or d = set(list1) & set(list2)
+    c = set(list1).union(set(list2))
+    d = set(list1).intersection(set(list2))
     return list(c - d)
 
 t=1
@@ -32,7 +34,8 @@ while t==1 :
                 difflist = diff(sockstat, presockstat)
                 if (len(sockstat) > len(presockstat)):
                         if 'root' in ''.join(difflist):
-                                bot.send_message(chatid,'!!!ROOT LOGIN  DETECTED!!!')                                                                                                             
+                                bot.send_message(chatid,'!!!ROOT LOGIN  DETECTED!!!')
+                                logging.warning("The root has logged in.".join(difflist))                                                                                                             
                         bot.send_message(chatid,'IN@%s: %s'%(hostname,''.join(difflist)))                                                                                                              
                 if (len(sockstat) < len(presockstat)):
                         bot.send_message(chatid,'OUT@%s: %s'%(hostname,''.join(difflist)))                                                                                                          
