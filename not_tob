@@ -30,8 +30,6 @@ presockstat = ['']
 while t==1 :
         sockstat = os.popen('who').read()
         sockstat = sockstat.split('\n')
-        #temp3 = [item for item in sockstat if item not in presockstat]
-        #print (temp3)
         if (sockstat != presockstat) and (sockstat != ''):
                 difflist = diff(sockstat, presockstat)
                 if (len(sockstat) > len(presockstat)):
