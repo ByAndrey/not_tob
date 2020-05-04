@@ -37,10 +37,10 @@ while t==1 :
                 if (len(sockstat) > len(presockstat)):
                         if 'root' in ''.join(difflist):
                                 bot.send_message(chatid,'!!!ROOT LOGIN  DETECTED!!!')
-                                logging.warning("The root has logged in.".join(difflist))                                                                                                             
-                        bot.send_message(chatid,'IN@%s: %s'%(hostname,''.join(difflist)))                                                                                                              
+                                logging.warning("The root has logged in.".join(difflist))
+                        bot.send_message(chatid,'IN@%s: %s'%(hostname,''.join(difflist)))
                 if (len(sockstat) < len(presockstat)):
-                        bot.send_message(chatid,'OUT@%s: %s'%(hostname,''.join(difflist)))                                                                                                          
+                        bot.send_message(chatid,'OUT@%s: %s'%(hostname,''.join(difflist)))
         if (sockstat != presockstat) and (sockstat == ''):
                 bot.send_message('@%s There is no users'%(hostname))
         presockstat = sockstat
