@@ -15,7 +15,7 @@ chatid = config.get('bot', 'chatid')
 logging.info(chatid)
 hostname = os.uname()[1]
 
-print ("Not_toB is runnint and checking WHO. Token : %s / Chat_id : %s."%(token,chatid))
+print ("Not_toB is running and checking WHO. Token : %s / Chat_id : %s."%(token,chatid))
 
 bot = telebot.TeleBot(token)
 bot.send_message(chatid,"I'm running and checking WHO on %s" %hostname)
